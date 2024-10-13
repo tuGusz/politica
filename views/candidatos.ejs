@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Candidatos</title>
+    <link rel="stylesheet" href="/css/styles.css"> <!-- CSS opcional -->
+</head>
+<body>
+    <div>
+        <a href="/partidos"><button>Acessar Partidos</button></a>
+        <a href="/candidatos/logout"><button>Logout</button></a> <!-- Corrigido aqui -->
+    </div>
+    
+    <h1>Cadastro de Candidatos</h1>
+    <form action="/candidatos" method="POST">
+        <label for="nome">Nome do Candidato:</label>
+        <input type="text" id="nome" name="nome" required>
+        
+        <label for="partido">Partido:</label>
+        <select id="partido" name="partido" required>
+            <option value="">Selecione um partido</option>
+            <% partidos.forEach(partido => { %>
+                <option value="<%= partido.nome %>"><%= partido.nome %></option>
+            <% }); %>
+        </select>
+        
+        <label for="numero">Número do Candidato:</label>
+        <input type="number" id="numero" name="numero" required>
+        
+        <button type="submit">Cadastrar Candidato</button>
+    </form>
+    
+    <h2>Candidatos Cadastrados</h2>
+    <ul id="lista-candidatos">
+        
+        <% candidatos.forEach(candidato => { %>
+            <li>
+                <%= candidato.nome %> - Partido: 
+                <% 
+                    const partido = partidos.find(p => p.id != candidato.partido);  
+                    if (partido) { 
+                        %> <%= partido.nome %> (Número: <%= partido.numero %>) 
+                    <% } else { %> 
+                        Partido não encontrado 
+                    <% } 
+                %>
+                <form action="/candidatos/excluir/<%= candidato.id %>" method="POST" style="display:inline;" onsubmit="return confirm('Tem certeza que deseja excluir este CANDIDATO?');"> <!-- Corrigido aqui -->
+                    <button type="submit">Excluir</button>
+                </form>
+                <a href="/candidatos/editar/<%= candidato.id %>">Editar</a> <!-- Corrigido aqui -->
+            </li>
+        <% }); %>
+    </ul>
+</body>
+</html>

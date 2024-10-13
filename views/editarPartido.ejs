@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Partido</title>
+</head>
+<body>
+    <h1>Editar Partido</h1>
+    <form action="/partidos/editar/<%= partido.id %>" method="POST"> <!-- Use partido.id aqui -->
+        <label for="nome">Nome do Partido:</label>
+        <input type="text" id="nome" name="nome" value="<%= partido.nome %>" required>
+        
+        <label for="sigla">Sigla:</label>
+        <input type="text" id="sigla" name="sigla" value="<%= partido.sigla %>" required>
+        
+        <label for="numero">Número de Registro:</label>
+        <input type="number" id="numero" name="numero" value="<%= partido.numero %>" required>
+        
+        <button type="submit">Salvar Alterações</button>
+    </form>
+</body>
+</html>

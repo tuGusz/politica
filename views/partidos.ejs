@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Partidos</title>
+    <link rel="stylesheet" href="/css/styles.css"> <!-- CSS opcional -->
+</head>
+<body>
+    <div>
+        <a href="/candidatos"><button>Acessar Candidatos</button></a>
+        <a href="/candidatos/logout"><button>Logout</button></a> <!-- Corrigido aqui -->
+    </div>
+    
+
+    <h1>Cadastro de Partidos</h1>
+    <form action="/partidos" method="POST">
+        <label for="nome">Nome do Partido:</label>
+        <input type="text" id="nome" name="nome" required>
+        
+        <label for="sigla">Sigla:</label>
+        <input type="text" id="sigla" name="sigla" required>
+        
+        <label for="numero">Número de Registro:</label>
+        <input type="number" id="numero" name="numero" required>
+        
+        <button type="submit">Cadastrar Partido</button>
+    </form>
+    
+    <h2>Partidos Cadastrados</h2>
+    <ul id="lista-partidos">
+        <% partidos.forEach((partido, index) => { %>
+            <li>
+                <%= partido.nome %> - <%= partido.sigla %> (Número: <%= partido.numero %>)
+                <a href="/partidos/editar/<%= partido.id %>">Editar</a>
+                <form action="/partidos/excluir/<%= partido.id %>" method="POST" onsubmit="return confirm('Tem certeza que deseja excluir este partido?');">
+                    <button type="submit">Excluir</button>
+                </form>                
+           
+            </li>
+        <% }); %>
+    </ul>
+    
+</body>
+<script>
+    document.querySelector('form').addEventListener('submit', function(event) {
+        const nome = document.getElementById('nome').value;
+        const sigla = document.getElementById('sigla').value;
+        const numero = document.getElementById('numero').value;
+
+        if (!nome || !sigla || !numero) {
+            alert('Todos os campos são obrigatórios.');
+            event.preventDefault();  
+        }
+    });
+</script>
+
+</html>
